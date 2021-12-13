@@ -1,0 +1,37 @@
+{%  extends 'base2.html.twig' %}
+{% block work %}
+    <div class="card">
+    <div class="card-header card-header-primary">
+        <h2 class="card-title">Demandes des utilisateurs</h2>
+    </div>
+    <section class="services section-padding">
+        <div class="container">
+            <div class="row">
+                {% for contactus in contactus %}
+                    {% if contactus.answered =='no' %}
+                        <div class="col-md-7" >
+                            <div class="card card-chart">
+                                <div class="card-body">
+                                    <h3 class="card-title">subject: {{contactus.subject}}</h3>
+                                    <p>body:<br>{{ contactus.body}}</p>
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i>
+                                        sent at {{ contactus.contactUsdate|date()}}
+                                        | by {{ contactus.creator.email}}
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-round btn-fill btn-info pull-right"
+                                            href="{{ path('send_mail',{'id': contactus.id})}}">
+                                            Reply
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <br><br><br><br><br><br><br><br><br><br>
+        </div>
+    </section>
+{% endblock%}

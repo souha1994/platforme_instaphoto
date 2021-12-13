@@ -1,0 +1,114 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block title %}Image{% endblock %}
+{% block styles %}
+    <style>
+        * {
+        box-sizing: border-box;
+        }
+
+        body {
+        background-color: #f1f1f1;
+        }
+
+        /* Center website */
+        .main {
+        max-width: 1000px;
+        margin: auto;
+        }
+
+        h1 {
+        font-size: 50px;
+        word-break: break-all;
+        }
+
+        .row {
+        margin: 8px -16px;
+        }
+
+        /* Add padding BETWEEN each column */
+        .row,
+        .row > .column {
+        padding: 8px;
+        }
+
+        /* Clear floats after rows */ 
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+
+        /* Content */
+        .content {
+            background-color: white;
+        }
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media screen and (max-width: 900px) {
+        .column {
+            width: 50%;
+            
+        }
+        }
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media screen and (min-width: 769px) {
+        .column {
+            padding: 175px;
+        }
+        }
+
+        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+        .column {
+            width: 100%;
+            
+        }
+        }
+    </style>
+{% endblock %}
+{% block work %}
+{% if 'ROLE_ADMIN' not in app.user.roles %}
+    {{ include('default/_form_contact.html.twig') }}
+{% else %}
+    <div class="column">
+        <div class="content">
+        <img src="{{ asset ('uploads/images/users/')~ image.image }}" alt="Mountains" style="width:100%; height: 300px; margin-bottom: 10px;">
+        <h3>{{ image.title }}</h3>
+        <div class="user">
+            <a href="{{ path('user_show', {'id': image.creator.id}) }}">{{ image.creator.email }}</a>
+        </div>
+        <div class="user">
+            {{ image.createDate ? image.createDate|date('Y-m-d H:i:s') : '' }}
+        </div>
+        <p>{{ image.description }}</p>
+        </div>
+        <h1>Create new Commentaire</h1>
+
+        {{ include('default/_form_contact.html.twig') }}
+        
+        <table class="table">
+        <tbody>
+        {% for com in image.commentaires %}
+            <tr>
+                <th>Title</th>
+                <td>{{ com.Contenu }}</td>
+                
+                <th>User</th>
+                <td>{{ com.user.email }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    </div>
+    <a href="{{ path('image_index') }}">back to list</a>
+{% endif %}
+    
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+    <a href="{{ path('image_index') }}">back to list</a>
+    <a href="{{ path('image_edit', {'id': image.id}) }}">edit</a>
+    {{ include('image/_delete_form.html.twig') }}
+    {% endif %}
+    
+{% endblock %}

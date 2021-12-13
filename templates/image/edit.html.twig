@@ -1,0 +1,92 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block title %}Edit Image{% endblock %}
+{% block styles %}
+    <style>
+        * {
+        box-sizing: border-box;
+        }
+
+        body {
+        background-color: #f1f1f1;
+        }
+
+        /* Center website */
+        .main {
+        max-width: 1000px;
+        margin: auto;
+        padding: 175px
+        }
+
+        h1 {
+        font-size: 50px;
+        word-break: break-all;
+        }
+
+        .row {
+        margin: 8px -16px;
+        }
+
+        /* Add padding BETWEEN each column */
+        .row,
+        .row > .column {
+        padding: 8px;
+        }
+
+        /* Create four equal columns that floats next to each other */
+        .column {
+        float: left;
+        width: 50%;
+        }
+
+        /* Clear floats after rows */ 
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+
+        /* Content */
+        .content {
+        background-color: white;
+        padding: 10px;
+        }
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media screen and (max-width: 900px) {
+        .column {
+            width: 50%;
+        }
+        }
+
+        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+        .column {
+            width: 100%;
+        }
+        }
+    </style>
+{% endblock %}
+{% block work %}
+    
+
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+        <h1>Edit Image</h1>
+
+        {{ include('image/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('image_index') }}">back to list</a>
+
+        {{ include('image/_delete_form.html.twig') }}
+    {% else %}
+        <div id="container">
+        <h1>Edit Image</h1>
+
+        {{ include('image/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('image_index') }}">back to list</a>
+
+        {{ include('image/_delete_form.html.twig') }}
+        </div>
+    {% endif %}
+{% endblock %}

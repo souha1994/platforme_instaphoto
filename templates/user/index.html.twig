@@ -1,0 +1,627 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block styles %}
+
+<style>
+
+{# .main{
+    padding: 175px
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    /* max-width: 300px; */
+    /* margin: auto; */
+    text-align: center;
+    font-family: arial;
+    /* flex-direction: row; */
+    /* flex: 3; */
+    /* row-gap: initial; */
+    width: calc(50% - calc(25% - 50px));
+    display: inline-block;
+    /* align-content: space-between; */
+    display: inline-block;
+    margin: 5px;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+} #}
+
+#container {
+			overflow: hidden;
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#header {
+			position: relative;
+			overflow: hidden;
+			background-color: #8F749A;
+		}
+		#header:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			display: block;
+
+			background-image: url("{{ asset('images/im1.jpg')}}");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+		}
+		#header > .wrapper {
+			position: relative;
+			display: flex;
+			height: 100%;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+		}
+		#header > .wrapper > .catchphrase {
+			margin-bottom: 20px;
+
+			font-weight: 500;
+			color: #FADB6C;
+		}
+		#header > .wrapper > .title {
+			padding-right: 20%;
+
+			font-weight: 800;
+			color: #FFF;
+		}
+
+		#header > .accent-1 > div {
+			background-image: url("{{ asset('images/svg/shape.1.svg')}}");
+		}
+		#header > .accent-2 > div {
+			background-image: url("{{ asset('images/svg/shape.2.svg')}}");
+		}
+		#header > .accent-3 > div {
+			background-image: url("{{ asset('images/svg/shape.3.svg')}}");
+		}
+
+		@media(min-width : 900px) {
+			#header {
+				height: 620px;
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#header:before {
+				width: 30%;
+			}
+			#header > .wrapper {
+				width: 550px;
+			}
+			#header > .wrapper > .catchphrase {
+				font-size: 28px;
+			}
+			#header > .wrapper > .title {
+				line-height: 70px;
+				font-size: 60px;
+			}
+			#header > .accent-1 {
+				top: -5%;
+				left: -5%;
+			}
+			#header > .accent-1 > div {
+				height: 700px;
+				width: 700px;
+			}
+			#header > .accent-2 {
+				top: 70%;
+				left: 50%;
+			}
+			#header > .accent-2 > div {
+				height: 700px;
+				width: 700px;
+			}
+			#header > .accent-3 {
+				bottom: -10%;
+				right: 30%;
+			}
+			#header > .accent-3 > div {
+				height: 500px;
+				width: 500px;
+			}
+		}
+		@media(max-width : 899px) {
+			#header {
+				height: 550px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#header:before {
+				width: 150px;
+			}
+			#header > .wrapper {
+				width: 100%;
+			}
+			#header > .wrapper > .catchphrase {
+				font-size: 18px;
+			}
+			#header > .wrapper > .title {
+				line-height: 45px;
+				font-size: 40px;
+			}
+			#header > .accent-1 {
+				top: 0;
+				left: 0;
+			}
+			#header > .accent-1 > div {
+				height: 300px;
+				width: 300px;
+			}
+			#header > .accent-2 {
+				top: 70%;
+				left: 50%;
+			}
+			#header > .accent-2 > div {
+				height: 250px;
+				width: 250px;
+			}
+			#header > .accent-3 {
+				bottom: 0;
+				right: 25%;
+			}
+			#header > .accent-3 > div {
+				height: 300px;
+				width: 300px;
+			}
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#nav.static {
+			color: #fff;
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#projets {
+			position: relative;
+			z-index: 1;
+		}
+		#projets > .title {
+			margin-bottom: 75px;
+			font-weight: 200;
+		}
+		#projets > .title > span {
+			font-weight: 900;
+		}
+		#projets > .projets {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			margin-bottom: 95px;
+			row-gap: 40px;
+		}
+		#projets > .projets > .projet {
+			position: relative;
+			display: block;
+		}
+		#projets > .projets > .projet > .card {
+			display: flex;
+			height: 330px;
+			flex-direction: column;
+
+			background-color: #FFF;
+			border-top-left-radius: 30px;
+
+			transition: filter 0.4s ease-out;
+		}
+		#projets > .projets > .projet:hover > .card {
+			filter: drop-shadow(0 0 15px rgba(0,0,0,.2));
+		}
+		#projets > .projets > .projet > .card > .info {
+			padding: 20px;
+		}
+		#projets > .projets > .projet > .card > .info > .type {
+			margin-bottom: 8px;
+			font-size: 14px;
+		}
+		#projets > .projets > .projet > .card > .info > .title {
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+
+			font-size: 16px;
+			font-weight: 800;
+		}
+		#projets > .projets > .projet > .card > .thumbnail {
+			position: relative;
+			flex: 1;
+			background-position: center;
+			background-size: cover;
+		}
+		#projets > .projets > .projet > .card > .thumbnail:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #FADB6C;
+
+			opacity: 0;
+			transition: opacity 0.4s ease-out;
+		}
+		#projets > .projets > .projet:hover > .card > .thumbnail:after {
+			opacity: .7;
+		}
+		#projets > .projets > .projet > .company > .logo {
+			position: absolute;
+			top: 315px;
+			left: 7.5%;
+			display: block;
+			height: 63px;
+			width: 63px;
+			padding: 15px;
+
+			background-color: #FFF;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+			border-radius: 50%;
+			filter: drop-shadow(0 0 15px rgba(0,0,0,.2));
+		}
+		#projets > .projets > .projet > .company > .name {
+			margin-top: 10px;
+			overflow: hidden;
+			padding-left: calc(15% + 63px);
+			padding-right: 7.5%;
+		}
+
+		.cta-wrapper {
+			border-bottom: solid 1px transparent;
+			text-align: center;
+		}
+		.cta-wrapper > .cta-btn {
+			background-color: #8F749A;
+			color: #FFF;
+
+			cursor: pointer;
+		}
+        .cta-wrapper.reveal {
+			color: #FFF;
+
+			cursor: pointer;
+		}
+        .cta-wrapper.reveal > .cta-btn {
+			margin: 0 15px;
+			color: #FFF;
+		}
+
+		@media(min-width : 900px) {
+			#projets {
+				padding-top: 90px;
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#projets > .title {
+				margin-bottom: 75px;
+				font-size: 40px;
+			}
+		}
+		@media(max-width : 899px) {
+			#projets {
+				padding-top: 50px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#projets > .title {
+				margin-bottom: 50px;
+				font-size: 30px;
+			}
+		}
+
+		@media(min-width : 1920px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 160px) / 5);
+			}
+			#projets > .projets > .projet:not(:nth-child(5n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 1919px) and(min-width : 1400px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 120px) / 4);
+			}
+			#projets > .projets > .projet:not(:nth-child(4n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 1399px) and(min-width : 1200px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 80px) / 3);
+			}
+			#projets > .projets > .projet:not(:nth-child(3n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 1199px) and(min-width : 900px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 40px) / 2);
+			}
+			#projets > .projets > .projet:not(:nth-child(2n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 899px) and(min-width : 600px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 15px) / 2);
+			}
+			#projets > .projets > .projet:not(:nth-child(2n)) {
+				margin-right: 15px;
+			}
+		}
+		@media(max-width : 599px) {
+			#projets > .projets > .projet {
+				flex: 0 0 100%;
+			}
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#container-footer {
+			position: relative;
+			padding-top: 30px;
+
+			background-color: #475872;
+		}
+		@media(min-width : 900px) {
+			#container-footer {
+				margin-top: 210px;
+				padding-bottom: 30px;
+			}
+		}
+		@media(max-width : 899px) {
+			#container-footer {
+				margin-top: 290px;
+				padding-bottom: 55px;
+			}
+		}
+
+		#container-footer > .accent-1 {
+			top: 35%;
+			left: 10%;
+		}
+		#container-footer > .accent-1 > div {
+			height: 500px;
+			width: 500px;
+			background-image: url("{{ asset('images/svg/shape.1.svg')}}");
+			filter: brightness(.9);
+		}
+		#container-footer > .accent-2 {
+			top: 80%;
+			right: 20%;
+		}
+		#container-footer > .accent-2 > div {
+			height: 500px;
+			width: 500px;
+			background-image: url("{{ asset('images/svg/shape.3.svg')}}");
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#community {
+			position: relative;
+			color: #FFF;
+		}
+		#community > .wrapper {
+			padding-left: 30px;
+			padding-right: 30px;
+
+			background-color: #8F749A;
+			border-radius: 30px;
+
+			text-align: center;
+		}
+		#community > .wrapper > .title {
+			font-size: 32px;
+			font-weight: 200;
+		}
+		#community > .wrapper > .subtitle {
+			margin-bottom: 45px;
+
+			font-size: 32px;
+			font-weight: 700;
+		}
+		#community > .wrapper > .description {
+			margin-bottom: 50px;
+
+			font-weight: 200;
+			font-size: 18px;
+		}
+		#community > .wrapper > .cta-wrapper {
+			text-align: center;
+		}
+		#community > .wrapper > .cta-wrapper > .cta-btn {
+			margin: 0 15px;
+			color: #FFF;
+		}
+		#community > .wrapper > .cta-wrapper > .cta-1 {
+			background-color: #dc91a6;
+		}
+		#community > .wrapper > .cta-wrapper > .cta-2 {
+			background-color: #475872;
+		}
+		@media(min-width : 900px) {
+			#community {
+				margin-top: -140px;
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#community > .wrapper {
+				padding-top: 60px;
+				padding-bottom: 60px;
+			}
+		}
+		@media(max-width : 899px) {
+			#community {
+				margin-top: -220px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#community > .wrapper {
+				padding-top: 45px;
+				padding-bottom: 45px;
+			}
+		}
+		@media(min-width : 600px) {
+			#community > .wrapper > .description {
+				padding: 0 20%;
+			}
+		}
+		@media(max-width : 599px) {
+			#community > .wrapper > .description {
+				padding: 0 10%;
+			}
+		}
+        a:hover {
+            color: #1f1f1f;
+        }
+        #container-footer:before {
+            background-image: none;
+        }
+        #projets > .cta-wrapper > .cta-btn {
+            background-color: #8F749A;
+        }
+</style>
+{% endblock %}
+{% block work %}
+{% if 'ROLE_ADMIN' in app.user.roles %}
+    <h1>User index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('user_new') }}">Create new</a>
+{% else %}
+<section id="container">
+				<section id="projets">
+					<div class="title reveal" data-sr-id="0" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">Utilisateurs
+						<span>à la une</span>
+					</div>
+					<div class="projets">
+                    {% for user in users %}
+						<div class="projet reveal" data-sr-id="10" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">
+							<a class="card" style=" border: none;" href="{{ path('user_show', {'id': user.id}) }}" >
+								<div class="info">
+									<div class="type">29 images</div>
+									<div class="title">{{ user.email }}</div>
+								</div>
+								<div class="thumbnail" style="background-image: url(https://www.w3schools.com/howto/img_avatar2.png);"></div>
+							</a>
+							{# <a class="company" href="" >
+								<div class="logo" style="background-image: url(https://www.w3schools.com/howto/img_avatar2.png);"></div>
+								<div class="name"></div>
+							</a> #}
+						</div>
+                        {% endfor %}
+					</div>
+					{# <div class="cta-wrapper reveal" data-sr-id="11" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">
+						<a class="cta-btn" id="load-more" data-page="2">Charger plus de projets</a>
+					</div> #}
+				</section>
+				<div id="container-footer">
+					<div class="accent accent-1" style="transform: translate3d(0px, -290px, 0px);">
+						<div></div>
+					</div>
+					<div class="accent accent-2" style="transform: translate3d(0px, -300px, 0px);">
+						<div></div>
+					</div>
+                    <div class="cta-wrapper reveal" data-sr-id="11" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">
+						<a class="cta-btn" id="load-more" href="/image" data-page="2">Voir Liste des images</a>
+					</div>
+					{# <section class="reveal" id="community" data-sr-id="12" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">
+						<div class="wrapper">
+							<div class="title">Vous aussi rejoignez la communauté IForce !</div>
+							<div class="subtitle">Lancez-vous !</div>
+							<div class="description">Construire un monde plus humain, plus responsable et plus durable autour des sujets les plus concrets, entreprises, territoires.</div>
+							<div class="cta-wrapper">
+								<a href="/soutenir-un-projet" class="cta-btn cta-1">Soutenir un projet</a>
+								<a href="/lancer-un-projet" class="cta-btn cta-2">Lancer un projet</a>
+							</div>
+						</div>
+					</section> #}
+				</div>
+			</section>
+        <!-- Add icon library -->
+{# <div class="main" style="">
+{% for user in users %}
+    <div class="card" style="">
+    <img src="img.jpg" alt="John" style="width:100%">
+    <h1>John Doe</h1>
+    <p class="title">{{ user.email }}</p>
+    <a href="{{ path('user_show', {'id': user.id}) }}"><button>Contact</button></a>
+    </div>
+{% endfor %}
+</div> #}
+{% endif %}
+{% endblock %}
+{% block slider %}
+				<div class="accent accent-1" style="transform: translate3d(0px, 13px, 0px);">
+				<div></div>
+			</div>
+				<div class="accent accent-2" style="transform: translate3d(0px, -26px, 0px);">
+					<div></div>
+				</div>
+				<div class="accent accent-3" style="transform: translate3d(0px, -66px, 0px);">
+					<div></div>
+				</div>
+				<div class="wrapper">
+					<div class="catchphrase">+ 35 projets propulsés par IForce</div>
+					<div class="title">Projets citoyens &amp; engagés</div>
+				</div>
+			{% endblock %}

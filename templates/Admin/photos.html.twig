@@ -1,0 +1,64 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block work %}
+<div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Liste Photos</h4>
+                  
+                </div>
+                <div class="card-body">
+ 
+                  <div class="table-responsive">
+
+                    <table class="table">
+                      
+                      <thead class=" text-primary">
+                       
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          createur
+                        </th>
+                        <th>
+                          date
+                        </th>
+
+                      </thead>
+                       {% for photo in photos %}
+                      <tbody>
+                        <tr>
+                          <td>
+                            {{photo.id}}
+                          </td>
+                          <td>
+                            {{photo.titre}}
+                          </td>
+                          <td>
+                            {{photo.creator}}
+                          </td>
+                          <td>
+                           {{photo.createDate|date()}}
+                          </td>
+
+ {%endfor%}
+                        </tr>
+                      
+                      </tbody>
+
+                    </table>
+                   
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+
+ {% endblock %}

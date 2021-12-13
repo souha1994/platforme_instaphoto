@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html
+	lang="en">
+	<!-- Basic -->
+	<head>
+		<meta charset="utf-8">
+		<meta
+		http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<!-- Mobile Metas -->
+		<meta
+		name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Site Metas -->
+
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>
+			{% block title %}
+				Nos Photos :Souha Ben Abid
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+
+			<!-- Bootstrap CSS -->
+			<link
+			rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}} ">
+			<!-- Site CSS -->
+			<link
+			rel="stylesheet" href="{{ asset ('css/style.css') }}">
+			<!-- Responsive CSS -->
+			<link
+			rel="stylesheet" href="{{ asset ('css/responsive.css') }}">
+			<!-- Custom CSS -->
+			<link rel="stylesheet" href="{{ asset ('css/custom.css') }}">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<link rel='stylesheet' id='slick.style-css' href='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/lib/slick.css?ver=5.8.2' type='text/css' media='all'/>
+			<link rel='stylesheet' id='resetters-css' href='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/css/resetters.css?ver=5.8.2' type='text/css' media='all'/>
+			<link rel='stylesheet' id='layout.style-css' href='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/css/layout.css?ver=5.8.2' type='text/css' media='all'/>
+			<link rel='stylesheet' id='frontpage.style-css' href='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/css/frontpage.css?ver=5.8.2' type='text/css' media='all'/>
+			<link rel='stylesheet' id='wp-block-library-css' href='https://iforce.aply-projets.link/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2' type='text/css' media='all'/>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/lib/rellax.min.js?ver=5.8.2' id='rellax.script-js'></script>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/lib/jquery.ba-throttle-debounce.min.js?ver=5.8.2' id='throttle.script-js'></script>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/lib/scrollreveal.min.js?ver=5.8.2' id='scrollreveal.script-js'></script>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/lib/slick.min.js?ver=5.8.2' id='slick.script-js'></script>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/layout.js?ver=5.8.2' id='layout.script-js'></script>
+			<script type='text/javascript' src='https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/scripts/js/frontpage.js?ver=5.8.2' id='frontpage.script-js'></script>
+
+		{% endblock %}
+
+
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/> {% block styles %}{% endblock %}
+		<style>
+			/*---------------------------------------------------------------------------------------*/
+
+			#nav {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 200;
+				display: flex;
+				flex-direction: row;
+				align-items: flex-end;
+
+				font-size: 15.5px;
+
+				transition: padding 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
+			}
+			#nav.static {
+				background-color: transparent;
+				box-shadow: 0 0 5px transparent;
+			}
+			#nav.scroll {
+				background-color: #FFF;
+				box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+			}
+
+			#nav > .home-btn {
+				position: relative;
+				display: block;
+				height: 50px;
+				width: 125px;
+				margin-right: auto;
+
+				transition: height 0.2s ease-out, width 0.2s ease-out;
+			}
+			#nav > .home-btn:before,
+			#nav > .home-btn:after {
+				content: "";
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+			}
+			#nav > .home-btn:before {
+				background-image: url({{ asset('images/logo.png') }});
+			}
+			#nav > .home-btn:after {
+				background-image: url({{ asset('images/logo.png') }});
+				transition: opacity 0.2s ease-out;
+			}
+			#nav.static > .home-btn:after {
+				opacity: 0;
+			}
+			#nav.Scroll > .home-btn:after {
+				opacity: 1;
+			}
+
+			#nav > .menu-btn {
+				position: relative;
+				height: 30px;
+				width: 35px;
+			}
+			#nav > .menu-btn > span {
+				position: absolute;
+				right: 0;
+				transform: translateY(-50%);
+				display: block;
+				height: 3px;
+
+				background-color: #000;
+				border-radius: 1.5px;
+
+				pointer-events: none;
+			}
+			#nav > .menu-btn > .mid {
+				top: 50%;
+				left: 0;
+				transition: background-color 0s ease-out 0.2s;
+			}
+			#nav > .menu-btn > .top {
+				top: 10%;
+			}
+			#nav > .menu-btn > .bot {
+				top: 90%;
+			}
+			#nav > .menu-btn > .top,
+			#nav > .menu-btn > .bot {
+				left: 8px;
+				transition: background-color 0.2s ease-out 0.2s, transform 0.2s ease-out, left 0.2s ease-out, top 0.2s ease-out 0.2s;
+			}
+			#nav > .menu > .menu-item:not(.cta-btn) {
+				position: relative;
+			}
+			#nav > .menu-btn:hover > .top,
+			#nav > .menu-btn:hover > .bot {
+				left: 0;
+			}
+
+			@media(min-width : 1000px) {
+				#nav.static {
+					padding: 14px 50px;
+				}
+				#nav.scroll {
+					padding: 14px 50px 17px;
+				}
+				#nav {
+					padding: 14px 50px;
+				}
+				.customize-support #nav {
+					top: 32px;
+				}
+
+				#nav > .home-btn {
+					height: 63px;
+					width: 167px;
+				}
+				#nav > .menu-btn {
+					display: none;
+				}
+				#nav > .menu {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					top: -10px;
+					position: relative;
+				}
+				#nav > .menu > .menu-item {
+					font-size: 15px;
+					font-weight: 300;
+				}
+				#nav > .menu > .menu-item:not(:first-child) {
+					margin-left: 30px;
+				}
+				#nav > .menu > .menu-item:nth-last-child(2) {
+					margin-left: 25px;
+					background-color: #dc91a6;
+				}
+				#nav > .menu > .menu-item:nth-last-child(1) {
+					margin-left: 20px;
+					background-color: #8F749A;
+					color: #FFF;
+				}
+				#nav > .menu > .menu-item:not(.cta-btn):hover:before,
+				#nav > .menu > .menu-item.current:not(.cta-btn):before {
+					content: "";
+					position: absolute;
+					top: 140%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					display: block;
+					height: 7px;
+					width: 7px;
+					background-color: #FADB6C;
+					border-radius: 50%;
+				}
+			}
+			@media(max-width : 999px) {
+				#nav {
+					padding: 15px 15px 26px;
+				}
+				.customize-support #nav {
+					top: 46px;
+				}
+
+				#nav > .home-btn {
+					height: 41px;
+					width: 103px;
+					margin-bottom: -11px;
+				}
+				#nav > .menu-btn {
+					display: block;
+				}
+				#nav > .menu {
+					display: none;
+				}
+
+				body[class *= 'open'] #nav > .menu-btn > .top,
+				body[class *= 'open'] #nav > .menu-btn > .bot {
+					left: 0;
+				}
+				body[class *= 'open'] #nav > .menu-btn > .mid {
+					background-color: transparent;
+				}
+				body[class *= 'open'] #nav > .menu-btn > .top,
+				body[class *= 'open'] #nav > .menu-btn > .bot {
+					top: 50%;
+					background-color: #FFF;
+					transition: background-color 0.2s ease-out, transform 0.2s ease-out 0.2s, top 0.2s ease-out;
+				}
+				body[class *= 'open'] #nav > .menu-btn > .top {
+					transform: translateY(-50%) rotate(45deg);
+				}
+				body[class *= 'open'] #nav > .menu-btn > .bot {
+					transform: translateY(-50%) rotate(-45deg);
+				}
+
+				body[class *= 'open'] #nav {
+					background-color: transparent;
+					box-shadow: 0 0 5px transparent;
+					transition: padding 0.2s ease-out, background-color 0.2s ease-out 0.2s, box-shadow 0.2s ease-out 0.2s;
+				}
+				body[class *= 'open'] #nav > .home-btn:after {
+					opacity: 0;
+				}
+			}
+
+			/*---------------------------------------------------------------------------------------*/
+
+			#container {
+				overflow: hidden;
+			}
+
+			/*----------------------------------------------------------------------------------------------------------------*/
+
+			#slider {
+				position: relative;
+			}
+			#slider:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				display: block;
+				width: 445px;
+
+				background-color: #A8A1FC;
+			}
+			#slider > .slides {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+			#slider > .slides .slide {
+				background-position: center;
+				background-origin: content-box;
+				background-clip: content-box;
+				background-size: cover;
+			}
+			#slider > .titles {
+				position: absolute;
+			}
+			#slider > .titles .title {
+				font-weight: 800;
+				color: #FFF;
+			}
+			#slider > .descriptions {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				display: block;
+
+				background-color: #716DC3;
+			}
+			#slider > .descriptions .description {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				color: #FFF;
+			}
+			#slider > .arrows {
+				position: absolute;
+				left: 0;
+				transform: translateY(50%);
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+			}
+			#slider > .arrows > button {
+				display: block;
+
+				background-color: #FFF;
+				background-repeat: no-repeat;
+				background-size: 8px auto;
+				background-position: center;
+				border: none;
+				border-radius: 50%;
+
+				font-size: 0;
+				color: transparent;
+
+				cursor: pointer;
+			}
+			#slider > .arrows > button:not(:last-child) {
+				margin-right: 25px;
+			}
+			#slider > .arrows > button.slick-prev {
+				background-image: url("https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/images/icons/arrow.prev.svg");
+			}
+			#slider > .arrows > button.slick-next {
+				background-image: url("https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/images/icons/arrow.next.svg");
+			}
+			@media(min-width : 900px) {
+				#slider {
+					height: 800px;
+				}
+				#slider:before {
+					width: 445px;
+				}
+				#slider > .slides .slide {
+					height: 800px;
+					padding: 90px 180px 0 230px;
+				}
+				#slider > .titles {
+					top: 250px;
+					width: 520px;
+					padding-left: 50px;
+				}
+				#slider > .titles .title {
+					line-height: 72px;
+					font-size: 66px;
+				}
+				#slider > .descriptions {
+					width: 700px;
+					height: 200px;
+					padding-left: 230px;
+					padding-right: 70px;
+				}
+				#slider > .descriptions .description {
+					height: 200px;
+
+					font-size: 20px;
+					font-weight: 300;
+				}
+				#slider > .arrows {
+					bottom: 200px;
+					left: 50px;
+				}
+				#slider > .arrows > button {
+					height: 50px;
+					width: 50px;
+				}
+			}
+			@media(max-width : 899px) {
+				#slider {
+					height: 730px;
+				}
+				#slider:before {
+					width: 150px;
+				}
+				#slider > .slides .slide {
+					height: 730px;
+					padding: 70px 0 0 50px;
+				}
+				#slider > .titles {
+					top: 135px;
+					width: 320px;
+					padding-left: 15px;
+				}
+				#slider > .titles .title {
+					font-size: 40px;
+					line-height: 40px;
+				}
+				#slider > .descriptions {
+					width: 100%;
+					height: 175px;
+					padding-left: 15px;
+					padding-right: 40px;
+				}
+				#slider > .descriptions .description {
+					height: 175px;
+					padding-top: 15px;
+
+					font-size: 18px;
+					font-weight: 300;
+				}
+				#slider > .arrows {
+					bottom: 175px;
+					left: 15px;
+				}
+				#slider > .arrows > button {
+					height: 40px;
+					width: 40px;
+				}
+			}
+			/*---------------------------------------------------------------------------------------*/
+
+			.cta-btn {
+				position: relative;
+				display: inline-block;
+				overflow: hidden;
+				padding: 0 14.5px;
+
+				border-radius: 21px;
+
+				text-align: center;
+				line-height: 42px;
+				color: #000;
+			}
+			.cta-btn > span {
+				position: relative;
+			}
+			.cta-btn:before {
+				content: "";
+				position: absolute;
+				top: 100%;
+				right: 0;
+				left: 0;
+				display: block;
+				padding-top: 100%;
+
+				background-color: rgba(0, 0, 0, 0.1);
+				border-radius: 50%;
+
+				transition: top 0.4s ease-in 0s, border-radius 0.5s ease-in 0.08s;
+			}
+			.cta-btn:hover:before {
+				top: 0;
+				border-radius: 21px;
+			}
+			.cta-btn > span {
+				position: relative;
+			}
+
+			.cta-link {
+				position: relative;
+			}
+			.cta-link:after {
+				content: '';
+				position: absolute;
+				bottom: -3px;
+				left: 0;
+				transform: scaleX(0);
+				transform-origin: bottom left;
+				width: 100%;
+				height: 1px;
+
+				background-color: #FFF;
+
+				transition: transform 0.25s ease-out;
+			}
+			.cta-link.current:after,
+			.cta-link:hover:after {
+				transform: scaleX(1);
+			}
+
+			.footer-cta-link > span {
+				position: relative;
+			}
+			.footer-cta-link > span:after {
+				content: '';
+				position: absolute;
+				bottom: -3px;
+				left: 0;
+				transform: scaleX(0);
+				transform-origin: bottom left;
+				width: 100%;
+				height: 1px;
+
+				background-color: #FFF;
+
+				transition: transform 0.25s ease-out;
+			}
+			.footer-cta-link > span:hover:after {
+				transform: scaleX(1);
+			}
+
+			/*---------------------------------------------------------------------------------------*/
+			/*---------------------------------------------------------------------------------------*/
+
+			.accent {
+				position: absolute;
+				z-index: 0;
+				height: 0;
+				width: 0;
+			}
+			.accent > div {
+				transform: translate(-50%, -50%);
+				background-position: center;
+				background-size: contain;
+				background-repeat: no-repeat;
+			}
+
+			/*---------------------------------------------------------------------------------------*/
+
+			.modal {
+				position: fixed;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				z-index: 100;
+				overflow: auto;
+				background-color: #335EEE;
+				background-repeat: no-repeat;
+
+
+				transition: opacity 0.4s ease-out;
+			}
+			@media(min-width : 783px) {
+				.customize-support .modal {
+					top: 46px;
+				}
+			}
+			@media(max-width : 782px) {
+				.customize-support .modal {
+					top: 46px;
+				}
+			}
+
+			/*---------------------------------------------------------------------------------------*/
+
+			#menu {
+				overflow: hidden;
+				padding: 70px 0;
+
+				transition: opacity 0.4s ease-out, padding-left 0.4s ease-out, padding-right 0.4s ease-out;
+			}
+			.menu-closed #menu {
+				opacity: 0;
+				pointer-events: none;
+			}
+			.menu-open #menu {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			@media(min-width : 1000px) {
+				#menu {
+					display: none;
+				}
+			}
+			@media(max-width : 999px) {
+				#menu {
+					display: block;
+				}
+			}
+
+			#menu > .menu-wrapper {
+				position: relative;
+				z-index: 1;
+
+				display: flex;
+				min-height: 100%;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				padding: 0 40px;
+			}
+			#menu > .menu-wrapper > .menu-item {
+				font-size: 26px;
+				font-weight: 300;
+				color: #FFF;
+			}
+			#menu > .menu-wrapper > .menu-item:not(:last-child) {
+				margin-bottom: 35px;
+			}
+			#menu > .menu-wrapper > .menu-item:nth-last-child(2),
+			#menu > .menu-wrapper > .menu-item:nth-last-child(1) {
+				padding: 0 28px;
+				border-radius: 27px;
+
+				line-height: 54px;
+			}
+			#menu > .menu-wrapper > .menu-item:nth-last-child(2) {
+				background-color: #FADB6C;
+				color: #000;
+			}
+			#menu > .menu-wrapper > .menu-item:nth-last-child(1) {
+				background-color: #2D42CC;
+				color: #FFF;
+			}
+
+			#menu > .accent-1 {
+				top: 15%;
+				left: 15%;
+			}
+			#menu > .accent-1 > div {
+				height: 400px;
+				width: 330px;
+				background-image: url("../../images/accents/shape.1.svg");
+			}
+			#menu > .accent-2 {
+				bottom: 19%;
+				right: 10%;
+			}
+			#menu > .accent-2 > div {
+				height: 300px;
+				width: 275px;
+				background-image: url("../../images/accents/shape.2.svg");
+			}
+
+			/* Slider */
+			.slick-slider {
+				position: relative;
+
+				display: block;
+				box-sizing: border-box;
+
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+
+				-webkit-touch-callout: none;
+				-khtml-user-select: none;
+				-ms-touch-action: pan-y;
+				touch-action: pan-y;
+				-webkit-tap-highlight-color: transparent;
+			}
+
+			.slick-list {
+				position: relative;
+
+				display: block;
+				overflow: hidden;
+
+				margin: 0;
+				padding: 0;
+			}
+			.slick-list:focus {
+				outline: none;
+			}
+			.slick-list.dragging {
+				cursor: pointer;
+				cursor: hand;
+			}
+
+			.slick-slider .slick-track,
+			.slick-slider .slick-list {
+				-webkit-transform: translate3d(0, 0, 0);
+				-moz-transform: translate3d(0, 0, 0);
+				-ms-transform: translate3d(0, 0, 0);
+				-o-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+			}
+
+			.slick-track {
+				position: relative;
+				top: 0;
+				left: 0;
+
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.slick-track:before,
+			.slick-track:after {
+				display: table;
+
+				content: '';
+			}
+			.slick-track:after {
+				clear: both;
+			}
+			.slick-loading .slick-track {
+				visibility: hidden;
+			}
+
+			.slick-slide {
+				display: none;
+				float: left;
+
+				height: 100%;
+				min-height: 1px;
+			}
+			[dir='rtl'] .slick-slide {
+				float: right;
+			}
+			.slick-slide img {
+				display: block;
+			}
+			.slick-slide.slick-loading img {
+				display: none;
+			}
+			.slick-slide.dragging img {
+				pointer-events: none;
+			}
+			.slick-initialized .slick-slide {
+				display: block;
+			}
+			.slick-loading .slick-slide {
+				visibility: hidden;
+			}
+			.slick-vertical .slick-slide {
+				display: block;
+
+				height: auto;
+
+				border: 1px solid transparent;
+			}
+			.slick-arrow.slick-hidden {
+				display: none;
+			}
+			body {
+				font-family: "Arial";
+			}
+			.footer-area p.lead a:hover {
+				color: #dc91a6;
+			}
+			.contact-imfo-box i {
+				color: #dc91a6;
+			}
+			.footer-area p a:hover {
+				color: #dc91a6;
+			}
+			.subscribe_form .submit {
+				background-color: #dc91a6;
+			}
+			.contact-imfo-box {
+				background: #8F749A;
+				padding: 30px 0;
+				border-radius: 0;
+			}
+			#back-to-top {
+				background: #dc91a6;
+			}
+
+		</style>
+	</head>
+
+
+	<body>
+		<article
+			id="wrapper">
+			<!-- Start header -->
+			<header id="header">
+				<nav id="nav" class="static">
+					<a class="home-btn" href="{{path ('homepage')}}"></a>
+					<a class="menu-btn">
+						<span class="top"></span>
+						<span class="mid"></span>
+						<span class="bot"></span>
+					</a>
+					{% if is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
+						{# <li class="nav-item">
+								<a class="nav-link" href="{{path ('contact')}}">Contacter nous</a>
+							</li>
+							{% endif %}
+							<li class="nav-item active">
+								<a class="nav-link" href="{{path ('homepage')}}">Home</a>
+							</li>
+
+							{% if is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
+								</li>
+								<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Catalogues</a>
+							<div class="dropdown-menu" aria-labelledby="dropdown-a">
+								<a class="dropdown-item" href="{{path ('image_index')}}">Actualité</a>
+								<a class="dropdown-item" href="{{ path('user_index') }}">Utilisateurs</a>
+								<a class="dropdown-item" href="{{ path('user_edit', {'id': app.user.id}) }}">Profil</a>
+								<a class="dropdown-item" href="{{path ('image_new')}}">Ajouter Photos</a>
+							</div>
+						</li> #}
+
+						<div class="menu">
+						<a href="{{path ('image_index')}}" class="menu-item">
+							<span>Liste des images</span>
+						</a>
+						<a href="{{path ('user_index')}}" class="menu-item">
+							<span>Liste des utilisateurs</span>
+						</a>
+						<a href="{{path ('image_new')}}" class="menu-item">
+							<span>Ajouter une image</span>
+						</a>
+						<a href="{{path ('contact')}}" class="menu-item">
+							<span>Contacter nous</span>
+						</a>
+						<a href="{{ path('user_edit', {'id': app.user.id}) }}" class="menu-item cta-btn">
+							<span>Mon profile</span>
+						</a>
+						<a href="{{path('app_logout')}}" class="menu-item cta-btn">
+							<span>Déconnexion</span>
+						</a>
+					</div>
+						{% else %}
+							<div class="menu">
+						<a href="{{path ('image_index')}}" class="menu-item">
+							<span>Liste des images</span>
+						</a>
+						<a href="{{path('user_new')}}" class="menu-item cta-btn">
+							<span>S'inscrire</span>
+						</a>
+						<a href="{{path('app_login')}}" class="menu-item cta-btn">
+							<span>Connexion</span>
+						</a>
+						</div>
+						{% endif %}
+					
+				</nav>
+				{% block slider %}{% endblock %}
+			</header>
+			{% for message in app.flashes('info') %}
+				<div class="flash-info">
+					{{ message }}
+				</div>
+			{% endfor %}
+			{% block work %}{% endblock %}
+		</article>
+		{% block footer %}
+			<!-- Start Contact info -->
+			<div class="contact-imfo-box">
+				<div class="container">
+					<div class="row" style="
+							    margin-right: -200px;
+							    margin-left: -200px;
+							">
+						<div class="col-md-4">
+							<i class="fa fa-volume-control-phone"></i>
+							<div class="overflow-hidden">
+								<h4>Phone</h4>
+								<p class="lead">
+									+21654905566
+								</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<i class="fa fa-envelope"></i>
+							<div class="overflow-hidden">
+								<h4>Email</h4>
+								<p class="lead">
+									souhabenabid1994@gmail.com
+																																																																																																																																		                        kaabirahma@gmail.com
+								</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<i class="fa fa-map-marker"></i>
+							<div class="overflow-hidden">
+								<h4>Location</h4>
+								<p class="lead">
+									Tunisia, TN
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--  End Contact info -->
+
+
+			<!-- Start Footer -->
+			<footer class="footer-area bg-f">
+				<div class="container">
+					<div class="row" style="
+							    margin-right: -200px;
+							    margin-left: -200px;
+							">
+						<div class="col-lg-4 col-md-6">
+							<h3>About Us</h3>
+							<p>Nous offrons un espace pour partager entre nous des photos et des beaux moments. Bienvenue avec nous
+							</p>
+						</div>
+						<div class="col-lg-4 col-md-6">
+							<h3>Subscribe</h3>
+							<div class="subscribe_form">
+								<form class="subscribe_form">
+									<input name="EMAIL" id="subs-email" class="form_input" placeholder="Email Address..." type="email">
+									<button type="submit" class="submit">SUBSCRIBE</button>
+									<div class="clearfix"></div>
+								</form>
+							</div>
+							<ul class="list-inline f-social">
+								<li class="list-inline-item">
+									<a href="https://www.facebook.com/souhababid">
+										<i class="fa fa-facebook" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a href="#">
+										<i class="fa fa-twitter" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a href="https://www.linkedin.com/in/souha-benabid-0842a2161/">
+										<i class="fa fa-linkedin" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a href="#">
+										<i class="fa fa-google-plus" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a href="https://www.instagram.com/abidsouha_/?hl=fr">
+										<i class="fa fa-instagram" aria-hidden="true"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-lg-4 col-md-6">
+							<h3>Contact information</h3>
+
+							<p class="lead">
+								<a href="#">+216 54905566</a>
+							</p>
+							<p>
+								<a href="#">souhabenabid1994@gmail.com</a>
+
+							</p>
+							<p>
+								<a href="#">kaabirahma@gmail.com</a>
+							</p>
+							<p></p>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="copyright">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<p class="company-name">All Rights Reserved. &copy;
+									<script>
+										document.write(new Date().getFullYear());
+									</script>
+									<a href="#">
+										souhabenabid.tn</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</footer>
+			<!--  End Footer -->
+			<a href="#" id="back-to-top" title="Back to top" style="display: none;">
+				<i class="fa fa-arrow-up" aria-hidden="true"></i>
+			</a>
+		{% endblock %}
+		{% block javascripts %}
+
+			<!-- ALL JS FILES -->
+			<script src=" {{ asset ('js/jquery-3.2.1.min.js') }}"></script>
+			<script src=" {{ asset ('js/popper.min.js') }}"></script>
+			<script src=" {{ asset('js/bootstrap.min.js') }}"></script>
+			<!-- ALL PLUGINS -->
+			<script src=" {{ asset ('js/jquery.superslides.min.js') }}"></script>
+			<script src="{{ asset ('js/images-loded.min.js') }}"></script>
+			<script src="{{ asset ('js/isotope.min.js') }}"></script>
+			<script src="{{ asset ('js/baguetteBox.min.js') }}"></script>
+			<script src="{{ asset ('js/form-validator.min.js') }}"></script>
+			<script src="{{ asset ('js/contact-form-script.js') }}"></script>
+			<script src="{{asset ('js/custom.js') }}"></script>
+		{% endblock %}
+	</body>
+
+</html>

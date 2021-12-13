@@ -1,0 +1,1130 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block title %}Edit User
+{% endblock %}
+{% block styles %}
+	<style>
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			background-color: #f1f1f1;
+		}
+
+		/* Center website */
+		.main {
+			padding: 175px;
+		}
+
+		h1 {
+			font-size: 50px;
+			word-break: break-all;
+		}
+
+		.row {
+			margin: 8px -16px;
+		}
+
+		/* Add padding BETWEEN each column */
+		.row,
+		.row > .column {
+			padding: 8px;
+
+		}
+
+		/* Clear floats after rows */
+		.row:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+		/* Content */
+		.content {
+			background-color: white;
+
+		}
+
+		/* Responsive layout - makes a two column-layout instead of four columns */
+		@media screen and(max-width: 900px) {
+			.column {
+				width: 50%;
+
+			}
+		}
+		/* Responsive layout - makes a two column-layout instead of four columns */
+		@media screen and(min-width: 769px) {
+			.column {
+				padding: 175px;
+				width: calc(50% - 250px);
+			}
+		}
+
+		/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+		@media screen and(max-width: 600px) {
+			.column {
+				width: 100%;
+
+			}
+		}
+		#wrapper {
+			overflow: hidden;
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#container h2 {
+			font-weight: 900;
+		}
+		#container figure {
+			margin: 30px 0;
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#header {
+			position: relative;
+			overflow: hidden;
+			background-color: #8F749A;
+		}
+		#header:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			display: block;
+
+			background-color: #475872;
+		}
+
+		#header > .accent-1 > div {
+			background-image: url("{{ asset('images/svg/shape.1.svg')}}");
+		}
+		#header > .accent-2 > div {
+			background-image: url("{{ asset('images/svg/shape.2.svg')}}");
+		}
+		#header > .accent-3 > div {
+			background-image: url("{{ asset('images/svg/shape.3.svg')}}");
+		}
+
+		@media(min-width : 900px) {
+			#header {
+				height: 620px;
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#header:before {
+				width: 445px;
+			}
+
+			#header > .accent-1 {
+				top: -5%;
+				left: -5%;
+			}
+			#header > .accent-1 > div {
+				height: 700px;
+				width: 700px;
+			}
+			#header > .accent-2 {
+				top: 70%;
+				left: 50%;
+			}
+			#header > .accent-2 > div {
+				height: 700px;
+				width: 700px;
+			}
+			#header > .accent-3 {
+				bottom: -10%;
+				right: 20%;
+			}
+			#header > .accent-3 > div {
+				height: 700px;
+				width: 700px;
+			}
+		}
+		@media(max-width : 899px) {
+			#header {
+				height: 295px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#header:before {
+				width: 150px;
+			}
+
+			#header > .accent-1 {
+				display: none;
+			}
+			#header > .accent-2 {
+				top: 70%;
+				left: 50%;
+			}
+			#header > .accent-2 > div {
+				height: 250px;
+				width: 250px;
+			}
+			#header > .accent-3 {
+				bottom: 0;
+				right: 25%;
+			}
+			#header > .accent-3 > div {
+				height: 300px;
+				width: 300px;
+			}
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#content {
+			position: relative;
+			max-width: 1000px;
+			margin-left: auto;
+			margin-right: auto;
+			font-size: 16px;
+		}
+		#content > p {
+			line-height: 190%;
+		}
+		#content > .thumbnail {
+			margin-bottom: 20px;
+			background-position: center;
+			background-size: cover;
+		}
+		#content > .title {
+			font-weight: 700;
+			margin-bottom: 20px;
+		}
+		#content > .metadata > div {
+			font-size: 18px;
+			font-weight: 200;
+		}
+		#content > .metadata > div {
+			display: inline-block;
+		}
+		#content > .metadata > div:not(:last-child) {
+			margin-right: 40px;
+		}
+		#content > .metadata > .location {
+			position: relative;
+			padding-left: 30px;
+		}
+		#content > .metadata > .location:before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			display: block;
+			height: 24px;
+			width: 16px;
+
+			background-image: url("../../images/icons/location.svg");
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+		@media(min-width : 900px) {
+			#content {
+				margin-top: -435px;
+			}
+			#content > .thumbnail {
+				height: 500px;
+				margin-bottom: 35px;
+			}
+			#content > .title {
+				padding-right: 20%;
+				font-size: 30px;
+			}
+			#content > .metadata {
+				margin-bottom: 40px;
+			}
+		}
+		@media(max-width : 899px) {
+			#content {
+				margin-top: -135px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#content > .thumbnail {
+				height: 190px;
+				margin-bottom: 30px;
+			}
+			#content > .title {
+				font-size: 23px;
+			}
+			#content > .metadata {
+				margin-bottom: 35px;
+			}
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#container-footer {
+			position: relative;
+			padding-top: 30px;
+
+			background-color: #475872;
+		}
+		@media(min-width : 900px) {
+			#container-footer {
+				padding-bottom: 60px;
+			}
+		}
+		@media(max-width : 899px) {
+			#container-footer {
+				padding-bottom: 55px;
+			}
+		}
+
+		#container-footer > .accent-1 {
+			top: 35%;
+			left: 10%;
+		}
+		#container-footer > .accent-1 > div {
+			height: 500px;
+			width: 500px;
+			background-image: url("{{ asset('images/svg/shape.1.svg')}}");
+			filter: brightness(.9);
+		}
+		#container-footer > .accent-2 {
+			top: 80%;
+			right: 20%;
+		}
+		#container-footer > .accent-2 > div {
+			height: 500px;
+			width: 500px;
+			background-image: url("{{ asset('images/svg/shape.3.svg')}}");
+		}
+		#container-footer:before {
+			content: none;
+		}
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#community {
+			position: relative;
+			margin-bottom: 80px;
+
+			color: #FFF;
+		}
+		#community > .wrapper {
+			padding-left: 30px;
+			padding-right: 30px;
+
+			background-color: #8F749A;
+			border-radius: 30px;
+
+			text-align: center;
+		}
+		.cta-wrapper > .cta-1 {
+			background-color: #dc91a6 !important;
+		}
+		#community > .wrapper > .title {
+			font-size: 32px;
+			font-weight: 200;
+		}
+		#community > .wrapper > .subtitle {
+			margin-bottom: 45px;
+
+			font-size: 32px;
+			font-weight: 700;
+		}
+		#community > .wrapper > .description {
+			margin-bottom: 50px;
+
+			font-weight: 200;
+			font-size: 18px;
+		}
+		#community > .wrapper > .cta-wrapper {
+			text-align: center;
+		}
+		.cta-wrapper > .cta-btn {
+			margin: 0 15px;
+			color: #FFF;
+		}
+		.cta-wrapper > .cta-1 {
+			background-color: #2D42CC;
+		}
+		.cta-wrapper > .cta-2 {
+			background-color: #3D9AF8;
+		}
+		@media(min-width : 900px) {
+			#community {
+				margin-top: -140px;
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#community > .wrapper {
+				padding-top: 60px;
+				padding-bottom: 60px;
+			}
+		}
+		@media(max-width : 899px) {
+			#community {
+				margin-top: -220px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#community > .wrapper {
+				padding-top: 45px;
+				padding-bottom: 45px;
+			}
+		}
+		@media(min-width : 600px) {
+			#community > .wrapper > .description {
+				padding: 0 20%;
+			}
+		}
+		@media(max-width : 599px) {
+			#community > .wrapper > .description {
+				padding: 0 10%;
+			}
+		}
+
+		/*---------------------------------------------------------------------------------------------------------------*/
+
+		#lancer-projet {
+			position: relative;
+			left: calc(50% + 40px);
+		}
+		#lancer-projet > .content {
+			margin-bottom: 35px;
+
+			font-size: 18px;
+			font-weight: 200;
+		}
+		@media(min-width : 900px) {
+			#lancer-projet {
+				width: calc(50% - 40px);
+			}
+		}
+		@media(max-width : 899px) {
+			#lancer-projet {
+				width: auto;
+			}
+		}
+
+		/*---------------------------------------------------------------------------------------------------------------*/
+
+		#lancer-projet-form {
+			position: relative;
+		}
+
+		#lancer-projet-form > div:not(.spinner):not(.response):not(:first-child) {
+			margin-top: 40px;
+		}
+
+		#lancer-projet-form > .field,
+		#lancer-projet-form > .row,
+		#lancer-projet-form > .spinner,
+		#lancer-projet-form > .response {
+			transition: opacity 0.4s ease-out;
+		}
+		#lancer-projet-form > .errors,
+		#lancer-projet-form > .spinner,
+		#lancer-projet-form > .response {
+			display: none;
+		}
+
+		#lancer-projet-form > .errors {
+			padding: 20px;
+			margin-top: 20px;
+
+			border: solid 1px #FFF;
+			border-radius: 5px;
+		}
+		#lancer-projet-form > .errors > ul {
+			margin: 0;
+		}
+
+		#lancer-projet-form > .spinner {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			height: 100px;
+			width: 100px;
+
+			background-image: url("https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/images/icons/spinner.svg");
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+
+			animation: spinner 1.5s linear 0s infinite;
+			pointer-events: none;
+		}
+		@keyframes spinner {
+			0% {
+				transform: translate(-50%, -50%) rotate(0deg);
+			}
+			50% {
+				transform: translate(-50%, -50%) rotate(180deg);
+			}
+			100% {
+				transform: translate(-50%, -50%) rotate(360deg);
+			}
+		}
+
+		#lancer-projet-form > .response {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 400px;
+			padding: 20px;
+
+			border: solid 1px #FFF;
+			border-radius: 3px;
+
+			text-align: center;
+		}
+
+		#lancer-projet-form.sending > .field,
+		#lancer-projet-form.sending > .row {
+			opacity: 0;
+		}
+
+
+		#lancer-projet-form .field {
+			position: relative;
+		}
+		label.required:after {
+			content: "*";
+			margin-left: 5px;
+		}
+
+		#lancer-projet-form > .row:not(#cta-wrapper) {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+		#lancer-projet-form > .row:not(#cta-wrapper) > .field {
+			flex: 0 0 calc(50% - 10px);
+		}
+
+		#lancer-projet-form > #cta-wrapper {
+			display: flex;
+		}
+		@media(min-width : 600px) {
+			#lancer-projet-form > #cta-wrapper {
+				flex-direction: row;
+				justify-content: space-between;
+			}
+		}
+		@media(max-width : 1300px) and(min-width : 900px),
+		(max-width : 599px) {
+			#lancer-projet-form > #cta-wrapper {
+				flex-direction: column;
+				align-items: center;
+				row-gap: 25px;
+			}
+		}
+		#lancer-projet-form .text-field {}
+		label {
+			display: block;
+			margin-bottom: 10px;
+
+			font-size: 13px;
+		}
+		input,
+		textarea {
+			display: block;
+			width: 100%;
+			padding-left: 20px;
+			padding-right: 20px;
+
+			background: none;
+			border: solid 1px #FFF;
+			border-radius: 5px;
+
+			font-family: inherit;
+			font-size: inherit;
+			font-weight: 200;
+			color: #fff;
+
+			transition: border-color 0.2s ease-out;
+			margin-bottom: 44px
+		}
+		input::placeholder,
+		textarea::placeholder {
+			color: inherit;
+		}
+		input:focus,
+		textarea:focus {
+			border-color: #FADB6C;
+		}
+		input {
+			height: 44px;
+		}
+		textarea {
+			height: 150px;
+			padding-top: 12px;
+			padding-bottom: 12px;
+			resize: none;
+		}
+
+		#lancer-projet-form .file-field,
+		#lancer-projet-form .checkbox-field {
+			position: relative;
+		}
+		{
+			# input {
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: block;
+				height: 0;
+				width: 0;
+				opacity: 0;
+				pointer-events: none;
+			} #
+		}
+		label {
+			position: relative;
+			display: block;
+		}
+
+		#lancer-projet-form .checkbox-field > label {
+			padding-left: 22px;
+			margin-top: -10px;
+		}
+		#lancer-projet-form .checkbox-field > label:before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			display: block;
+			height: 7px;
+			width: 7px;
+			padding: 3px;
+
+			background-clip: content-box;
+			border: solid 1px;
+			border-radius: 2px;
+		}
+		input:checked + label:before {
+			background-color: #FFF;
+		}
+		label > a {
+			text-decoration: underline;
+		}
+
+		#lancer-projet-form .file-field {
+			max-width: 100%;
+			flex: 0 0 auto !important;
+		}
+		#lancer-projet-form .file-field > label {
+			height: 100%;
+			overflow: hidden;
+			padding: 0 60px 0 20px;
+
+			background-color: transparent;
+			border: solid 1px #FFF;
+			border-radius: 20px;
+
+			white-space: nowrap;
+			text-overflow: ellipsis;
+
+			line-height: 40px;
+			font-size: 14px;
+			font-weight: 200;
+			color: #fff;
+
+			transition: background-color 0.4s ease-out, color 0.4s ease-out;
+		}
+		#lancer-projet-form .file-field > label:hover {
+			background-color: #FFF;
+			color: #111;
+		}
+		#lancer-projet-form .file-field > label:empty:before {
+			content: "Ajouter un document";
+		}
+		#lancer-projet-form .file-field > label:after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			transform: translateY(-50%);
+			display: block;
+			height: 15px;
+			width: 25px;
+
+			background-image: url("https://iforce.aply-projets.link/wp-content/themes/iForce-15-09-2021/resources/images/icons/upload.svg");
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+
+			transition: filter 0.4s ease-out;
+		}
+		#lancer-projet-form .file-field > label:hover:after {
+			filter: brightness(10%);
+		}
+
+		form > .btn {
+			background-color: #dc91a6;
+			color: #fff;
+			line-height: 40px;
+			padding: 0 20px;
+			position: relative;
+			display: inline-block;
+			overflow: hidden;
+			border-radius: 21px;
+			text-align: center;
+			margin-top: 40px;
+		}
+		.contact-imfo-box {
+			display: none;
+		}
+		#user_type1 > div {
+			margin-top: 40px;
+		}
+		/*----------------------------------------------------------------------------------------------------------------*/
+
+		#projects {
+			position: relative;
+		}
+		#projects > .title {
+			margin-bottom: 15px;
+
+			font-weight: 200;
+			color: #FFF;
+		}
+		#projects > .title > span {
+			font-weight: 700;
+		}
+		#projects > .arrows {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
+			margin-bottom: 45px;
+		}
+		#projects > .arrows > button {
+			display: block;
+
+			background-color: #FFF;
+			background-repeat: no-repeat;
+			background-size: 8px auto;
+			background-position: center;
+			border: none;
+			border-radius: 50%;
+
+			font-size: 0;
+			color: transparent;
+
+			cursor: pointer;
+		}
+		#projects > .arrows > button:not(:last-child) {
+			margin-right: 25px;
+		}
+		#projects > .arrows > button.slick-prev {
+			background-image: url("../../images/icons/arrow.prev.svg");
+		}
+		#projects > .arrows > button.slick-next {
+			background-image: url("../../images/icons/arrow.next.svg");
+		}
+		#projects > .projects {
+			margin-bottom: 60px;
+		}
+		#projects > .projects .project {
+			margin-right: 20px;
+			padding: 20px;
+			width: 360px;
+			height: 350px;
+
+			border-top-left-radius: 30px;
+		}
+		#projects > .projects .project > a {
+			display: flex;
+			width: 100%;
+			height: 100%;
+			flex-direction: column;
+
+			background-color: #FFF;
+			border-top-left-radius: 30px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+		}
+		#projects > .projects .project > a > .info {
+			padding: 20px;
+		}
+		#projects > .projects .project > a > .info > .type {
+			font-size: 15px;
+		}
+		#projects > .projects .project > a > .info > .title {
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+
+			font-size: 20px;
+			font-weight: 800;
+		}
+		#projects > .projects .project > a > .thumbnail {
+			flex: 1;
+
+			background-size: cover;
+			background-position: center;
+		}
+		#projects > .cta-wrapper {
+			text-align: center;
+		}
+		#projects > .cta-wrapper > .cta-btn {
+			background-color: #8F749A;
+			color: #FFF;
+		}
+		@media(min-width : 900px) {
+			#projects {
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#projects > .title {
+				font-size: 40px;
+			}
+			#projects > .arrows > button {
+				height: 50px;
+				width: 50px;
+			}
+			#projects > .projects {
+				margin-left: -150px;
+				margin-right: -150px;
+			}
+			#projects > .projects > .slick-list {
+				padding-left: 130px;
+			}
+		}
+		@media(max-width : 899px) {
+			#projects {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#projects > .title {
+				font-size: 30px;
+			}
+			#projects > .arrows > button {
+				height: 40px;
+				width: 40px;
+			}
+			#projects > .projects {
+				margin-left: -15px;
+				margin-right: -15px;
+			}
+		}
+		#container {
+			overflow: visible !important;
+		}
+
+
+		.db-social .jumbotron {
+			margin: 0;
+			background: url('https://bootdey.com/img/Content/flores-amarillas-wallpaper.jpeg');
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
+			background-position: bottom center;
+			color: #fff !important;
+			height: 435px;
+			position: relative;
+			padding: 0;
+		}
+
+		.container-fluid {
+			padding: 30px;
+		}
+
+		.db-social .head-profile {
+			margin-top: -120px;
+			border-radius: 4px;
+			position: relative;
+		}
+
+		.widget {
+			background: #dc91a6;
+			border-radius: 0;
+			border: none;
+			margin-bottom: 30px;
+			color: #fff;
+		}
+		.has-shadow {
+			box-shadow: 0 1px 15px 1px rgba(52, 40, 104, 0.08);
+		}
+		.db-social .head-profile:before {
+			content: "";
+			background: rgb(220 145 166 / 59%);
+			height: 20px;
+			width: 90%;
+			position: absolute;
+			top: -20px;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+			border-radius: 4px 4px 0 0;
+		}
+		.db-social .head-profile:after {
+			content: "";
+			background: rgb(220 145 166 / 28%);
+			height: 20px;
+			width: 80%;
+			position: absolute;
+			top: -40px;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+			border-radius: 4px 4px 0 0;
+		}
+		.db-social .widget-body {
+			padding: 1rem 1.4rem;
+		}
+		.widget-body {
+			padding: 1.4rem;
+		}
+		.pb-0,
+		.py-0 {
+			padding-bottom: 0 !important;
+		}
+		.db-social .image-default img {
+			width: 120px;
+			position: absolute;
+			top: -80px;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+			z-index: 10;
+		}
+		.db-social .infos {
+			text-align: center;
+			margin-top: 4rem;
+			margin-bottom: 1rem;
+			line-height: 1.8rem;
+		}
+		.db-social h2 {
+			color: #fff;
+			font-size: 1.6rem;
+			font-weight: 600;
+			margin-bottom: 0.2rem;
+		}
+		.db-social .location {
+			font-size: 1rem;
+		}
+		.db-social .follow .btn {
+			padding: 10px 30px;
+		}
+		.btn:not(:disabled):not(.disabled) {
+			cursor: pointer;
+		}
+		.btn-shadow,
+		.btn-shadow a {
+			color: #5d5386;
+			background-color: #fff;
+			border-color: #fff;
+		}
+		.db-social .head-profile .actions {
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: 0.5rem;
+		}
+		.actions {
+			z-index: 999;
+			display: block;
+		}
+		.actions.dark .dropdown-toggle {
+			color: #2c304d;
+		}
+		.actions .dropdown-toggle {
+			color: #98a8b4;
+			background: none;
+			border: none;
+			padding: 0;
+			font-size: 1.7rem;
+		}
+		.actions .dropdown-menu {
+			border: none;
+			min-width: auto;
+			font-size: 1rem;
+			border-radius: 4px;
+			padding: 1.4rem 1.8rem;
+			text-align: left;
+			box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.15);
+		}
+
+		.actions .dropdown-menu .dropdown-item {
+			padding: 0.5rem 0;
+		}
+		.actions .dropdown-menu a {
+			color: #2c304d;
+			font-weight: 500;
+		}
+
+		.db-social .head-profile li:first-child {
+			padding-left: 0;
+		}
+		.db-social .head-profile li {
+			display: inline-block;
+			text-align: center;
+			padding: 0 1rem;
+		}
+		.db-social .head-profile li .counter {
+			font-size: 1.4rem;
+			font-weight: 600;
+		}
+		.db-social .head-profile li .heading {
+			font-size: 1rem;
+		}
+		#container ul > li:before {
+			content: none;
+		}
+		form {
+			text-align: left;
+		}
+		a:hover {
+			color: #1f1f1f;
+		}
+	</style>
+{% endblock %}
+{% block work %}
+{% if 'ROLE_ADMIN' in app.user.roles %}
+        <h1>Edit User</h1>
+
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('user_index') }}">back to list</a>
+
+        {{ include('user/_delete_form.html.twig') }}
+    {% else %}
+    <section id="container">
+			<section id="content">
+				<div class="container db-social">
+					<div class="jumbotron jumbotron-fluid"></div>
+					<div class="container-fluid">
+						<div class="row justify-content-center">
+							<div class="col-xl-11">
+								<div class="widget head-profile has-shadow">
+									<div class="widget-body pb-0">
+										<div class="row d-flex align-items-center">
+											<div class="col-xl-4 col-md-4 d-flex justify-content-lg-start justify-content-md-start justify-content-center">
+												<ul>
+													<li>
+														<div class="counter">
+															<font style="vertical-align: inherit;">
+																<font style="vertical-align: inherit;">246</font>
+															</font>
+														</div>
+														<div class="heading">
+															<font style="vertical-align: inherit;">
+																<font style="vertical-align: inherit;">Images</font>
+															</font>
+														</div>
+													</li>
+												</ul>
+											</div>
+											<div class="col-xl-4 col-md-4 d-flex justify-content-center">
+												<div class="image-default">
+													<img class="rounded-circle" src="https://www.w3schools.com/howto/img_avatar2.png" alt="..."></div>
+												<div class="infos">
+													<h2>
+														<font style="vertical-align: inherit;">
+															<font style="vertical-align: inherit;">David Vert</font>
+														</font>
+													</h2>
+													<div class="location">
+														<font style="vertical-align: inherit;">
+															<font style="vertical-align: inherit;">{{ user.email }}</font>
+														</font>
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-4 col-md-4 d-flex justify-content-lg-end justify-content-md-end justify-content-center">
+												<div class="follow">
+													<a class="menu-item cta-btn" href="#container-footer" style="
+																																																																																								    margin-left: 0;
+																																																																																								    background-color: #8F749A;
+																																																																																								    width: 184%;
+																																																																																								    right: 90%;
+																																																																											                                                        color: #fff;
+																																																																																								">
+														<i class="la la-user-plus"></i>
+														<font style="vertical-align: inherit;">
+															<font style="vertical-align: inherit;">Modifier</font>
+														</font>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div id="container-footer">
+				<div class="accent accent-1" style="transform: translate3d(0px, 108px, 0px);">
+					<div></div>
+				</div>
+				<div class="accent accent-2" style="transform: translate3d(0px, -35px, 0px);">
+					<div></div>
+				</div>
+				<section id="community">
+					<div class="wrapper">
+						<div class="title">Vous souhaitez modifier</div>
+						<div class="subtitle">votre données ?</div>
+						<div class="description">Eodem tempore Serenianus ex duce, cuius ignavia populatam in Phoenice Celsen ante rettulimus, pulsatae maiestatis imperii.</div>
+						{# {{ include('default/_form_contact.html.twig') }} #}
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						<div class="cta-wrapper">
+							<button class="cta-btn cta-1" style="width: 250px;     border: none;">{{ button_label|default('Modifier') }}</button>
+						</div>
+						{{ form_end(form) }}
+
+					</div>
+				</section>
+				<section id="projects">
+					<div class="title">
+						<span>Découvrez</span>
+						vos images</div>
+					<div class="arrows">
+						<button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button>
+						<button class="slick-next slick-arrow" aria-label="Next" type="button" style="">Next</button>
+					</div>
+					<div class="projects slick-initialized slick-slider">
+						<div class="slick-list draggable">
+							<div class="slick-track" style="opacity: 1; width: 45000px; transform: translate3d(0px, 0px, 0px);">
+								{% for image in images %}
+									<div class="project slick-slide" data-slick-index="0" aria-hidden="true" tabindex="-1">
+										<a href="{{ path('image_edit', {'id': image.id}) }}" tabindex="-1">
+											<div class="info">
+												<div class="type">{{ image.createDate ? image.createDate|date('Y-m-d H:i:s') : '' }}</div>
+												<div class="title">{{ image.title }}</div>
+											</div>
+											<div class="thumbnail" style="background-image: url({{ asset ('uploads/images/users/')~ image.image }});"></div>
+										</a>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+					{# <div class="cta-wrapper">
+						<a class="cta-btn" href="{{ path('user_index') }}">Liste des utilisateurs</a>
+					</div> #}
+				</section>
+
+			</div>
+		</section>
+    {% endif %}
+	
+{% endblock %}
+
+{% block slider %}
+	<div class="accent accent-1" style="transform: translate3d(0px, 13px, 0px);">
+		<div></div>
+	</div>
+	<div class="accent accent-2" style="transform: translate3d(0px, -26px, 0px);">
+		<div></div>
+	</div>
+	<div class="accent accent-3" style="transform: translate3d(0px, -66px, 0px);">
+		<div></div>
+	</div>
+{% endblock %}
+

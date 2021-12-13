@@ -1,0 +1,446 @@
+{% extends  'base_users.html.twig' %}
+{% block styles %}
+	<style>
+
+		#projets {
+			position: relative;
+			z-index: 1;
+		}
+		#projets > .title {
+			margin-bottom: 75px;
+			font-weight: 200;
+		}
+		#projets > .title > span {
+			font-weight: 900;
+		}
+		#projets > .projets {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			margin-bottom: 95px;
+			row-gap: 40px;
+		}
+		#projets > .projets > .projet {
+			position: relative;
+			display: block;
+		}
+		a:hover {
+			color: #1f1f1f;
+		}
+		#projets > .projets > .projet > .card {
+			display: flex;
+			height: 330px;
+			flex-direction: column;
+
+			background-color: #FFF;
+			border-top-left-radius: 30px;
+
+			transition: filter 0.4s ease-out;
+			border: none;
+		}
+		#projets > .projets > .projet:hover > .card {
+			filter: drop-shadow(0 0 15px rgba(0,0,0,.2));
+		}
+		#projets > .projets > .projet > .card > .info {
+			padding: 20px;
+		}
+		#projets > .projets > .projet > .card > .info > .type {
+			margin-bottom: 8px;
+			font-size: 14px;
+		}
+		#projets > .projets > .projet > .card > .info > .title {
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+
+			font-size: 16px;
+			font-weight: 800;
+		}
+		#projets > .projets > .projet > .card > .thumbnail {
+			position: relative;
+			flex: 1;
+			background-position: center;
+			background-size: cover;
+		}
+		#projets > .projets > .projet > .card > .thumbnail:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #FADB6C;
+
+			opacity: 0;
+			transition: opacity 0.4s ease-out;
+		}
+		#projets > .projets > .projet:hover > .card > .thumbnail:after {
+			opacity: .7;
+		}
+		#projets > .projets > .projet > .company > .logo {
+			position: absolute;
+			top: 315px;
+			left: 7.5%;
+			display: block;
+			height: 63px;
+			width: 63px;
+			padding: 15px;
+
+			background-color: #FFF;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+			border-radius: 50%;
+			filter: drop-shadow(0 0 15px rgba(0,0,0,.2));
+		}
+		#projets > .projets > .projet > .company > .name {
+			margin-top: 10px;
+			overflow: hidden;
+			padding-left: calc(15% + 63px);
+			padding-right: 7.5%;
+		}
+
+		#projets > .cta-wrapper {
+			border-bottom: solid 1px transparent;
+			text-align: center;
+		}
+		#projets > .cta-wrapper > .cta-btn {
+			background-color: #4058F6;
+			color: #FFF;
+
+			cursor: pointer;
+		}
+
+		@media(min-width : 900px) {
+			#projets {
+				padding-top: 90px;
+				padding-left: 150px;
+				padding-right: 150px;
+			}
+			#projets > .title {
+				margin-bottom: 75px;
+				font-size: 40px;
+			}
+		}
+		@media(max-width : 899px) {
+			#projets {
+				padding-top: 50px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			#projets > .title {
+				margin-bottom: 50px;
+				font-size: 30px;
+			}
+		}
+
+		@media(min-width : 1920px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 160px) / 5);
+			}
+			#projets > .projets > .projet:not(:nth-child(5n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 1919px) and(min-width : 1400px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 120px) / 4);
+			}
+			#projets > .projets > .projet:not(:nth-child(4n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 1399px) and(min-width : 1200px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 80px) / 3);
+			}
+			#projets > .projets > .projet:not(:nth-child(3n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 1199px) and(min-width : 900px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 40px) / 2);
+			}
+			#projets > .projets > .projet:not(:nth-child(2n)) {
+				margin-right: 40px;
+			}
+		}
+		@media(max-width : 899px) and(min-width : 600px) {
+			#projets > .projets > .projet {
+				flex: 0 0 calc((100% - 15px) / 2);
+			}
+			#projets > .projets > .projet:not(:nth-child(2n)) {
+				margin-right: 15px;
+			}
+		}
+		@media(max-width : 599px) {
+			#projets > .projets > .projet {
+				flex: 0 0 100%;
+			}
+		}
+	</style>
+{% endblock %}
+{% block work %}
+	<section id="projets">
+		<div class="title reveal" data-sr-id="0" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">Nos Images
+			<span>à la une</span>
+		</div>
+		<div class="projets">
+			{% for image in images %}
+				<a class="projet reveal" href="{{ path('user_new') }}" data-sr-id="10" style="visibility: visible; opacity: 1; transition: opacity 0.8s cubic-bezier(0.5, 0, 0.45, 0.9) 0.3s;">
+					<div class="card">
+						<div class="info">
+							<div class="type">{{ image.createDate ? image.createDate|date('Y-m-d H:i') : '' }}</div>
+							<div class="title">{{ image.title }}</div>
+						</div>
+						<div class="thumbnail" style="background-image: url({{ asset ('uploads/images/users/')~ image.image }});"></div>
+					</div>
+					<div class="company">
+						<div class="logo" style="background-image: url(https://www.w3schools.com/howto/img_avatar2.png);"></div>
+						<div class="name">{{ image.creator.email }}</div>
+					</div>
+				</a>
+			{% endfor %}
+		</div>
+		<div class="cta-wrapper reveal" data-sr-id="11" style="visibility: visible; opacity: 0;">
+			<a class="cta-btn" id="load-more" data-page="2">Voir plus</a>
+		</div>
+	</section>
+	<!-- Start slides -->
+{# <div id="slides" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-left">
+                <img src="{{ asset('images/slider-01.jpg')}}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Bienvenue sur notre blog de recettes gourmandes </strong></h1>
+                            <p class="m-b-40">On partage ensemble nos idées <br> 
+                           </p>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+<p><a class="btn btn-lg btn-circle btn-outline-new-white" href="{{ path('user_new') }}">Créer un compte</a></p>
+                            <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="{{ path('app_login') }}">Connexion</a></p>
+                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-left">
+                <img src="{{asset('images/slider-02.jpg')}}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Bienvenue sur notre blog de recettes gourmandes </strong></h1>
+                            <p class="m-b-40">On partage ensemble nos idées <br> 
+                           </p>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+<p><a class="btn btn-lg btn-circle btn-outline-new-white" href="{{ path('user_new') }}">Créer un compte</a></p>
+
+                            <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="{{ path('app_login') }}">Connexion</a></p>
+                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-left">
+                <img src="{{asset('images/slider-03.jpg')}}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Bienvenue sur notre blog de recettes gourmandes </strong></h1>
+                            <p class="m-b-40">On partage ensemble nos idées <br> 
+                           </p>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+<p><a class="btn btn-lg btn-circle btn-outline-new-white" href="{{ path('user_new') }}">Créer un compte</a></p>
+
+                            <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="{{ path('app_login') }}">Connexion</a></p>
+                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        </div>
+    </div> #}
+	<!--    End slides -->
+
+	<!-- Start About 
+		    <div class="about-section-box">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+		                    <div class="inner-column">
+		                        <h1>Welcome To <span>Live Dinner Restaurant</span></h1>
+		                        <h4>Little Story</h4>
+		                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque auctor suscipit feugiat. Ut at pellentesque ante, sed convallis arcu. Nullam facilisis, eros in eleifend luctus, odio ante sodales augue, eget lacinia lectus erat et sem. </p>
+		                        <p>Sed semper orci sit amet porta placerat. Etiam quis finibus eros. Sed aliquam metus lorem, a pellentesque tellus pretium a. Nulla placerat elit in justo vestibulum, et maximus sem pulvinar.</p>
+		                        <a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Reservation</a>
+		                    </div>
+		                </div>
+		                <div class="col-lg-6 col-md-6 col-sm-12">
+		                    <img src="{{asset('images/about-img.jpg')}}" alt="" class="img-fluid">
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		     End About 
+		    
+		     Start QT 
+		    <div class="qt-box qt-background">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-md-8 ml-auto mr-auto text-center">
+		                    <p class="lead ">
+		                        " If you're not the one cooking, stay out of the way and compliment the chef. "
+		                    </p>
+		                    <span class="lead">Michael Strahan</span>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    End QT -->
+
+
+	<!-- Start Gallery 
+		    <div class="gallery-box">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="heading-title text-center">
+		                        <h2>Gallery</h2>
+		                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="tz-gallery">
+		                <div class="row">
+		                    <div class="col-sm-12 col-md-4 col-lg-4">
+		                        <a class="lightbox" href="{{ asset('images/gallery-img-01.jpg')}}">
+		                            <img class="img-fluid" src="{{ asset('images/gallery-img-01.jpg')}}" alt="Gallery Images">
+		                        </a>
+		                    </div>
+		                    <div class="col-sm-6 col-md-4 col-lg-4">
+		                        <a class="lightbox" href="{{ asset ('images/gallery-img-02.jpg')}}">
+		                            <img class="img-fluid" src="{{ asset('images/gallery-img-02.jpg')}}" alt="Gallery Images">
+		                        </a>
+		                    </div>
+		                    <div class="col-sm-6 col-md-4 col-lg-4">
+		                        <a class="lightbox" href="{{ asset('images/gallery-img-03.jpg')}}">
+		                            <img class="img-fluid" src="{{ asset('images/gallery-img-03.jpg')}}" alt="Gallery Images">
+		                        </a>
+		                    </div>
+		                    <div class="col-sm-12 col-md-4 col-lg-4">
+		                        <a class="lightbox" href="{{ asset('images/gallery-img-04.jpg')}}">
+		                            <img class="img-fluid" src="{{ asset('images/gallery-img-04.jpg')}}" alt="Gallery Images">
+		                        </a>
+		                    </div>
+		                    <div class="col-sm-6 col-md-4 col-lg-4">
+		                        <a class="lightbox" href="{{ asset('images/gallery-img-05.jpg')}}">
+		                            <img class="img-fluid" src="{{ asset('images/gallery-img-05.jpg')}}" alt="Gallery Images">
+		                        </a>
+		                    </div> 
+		                    <div class="col-sm-6 col-md-4 col-lg-4">
+		                        <a class="lightbox" href="{{ asset('images/gallery-img-06.jpg')}}">
+		                            <img class="img-fluid" src="{{ asset('images/gallery-img-06.jpg')}}" alt="Gallery Images">
+		                        </a>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		     End Gallery
+		    
+		    Start Customer Reviews 
+		    <div class="customer-reviews-box">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="heading-title text-center">
+		                        <h2>Customer Reviews</h2>
+		                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-md-8 mr-auto ml-auto text-center">
+		                    <div id="reviews" class="carousel slide" data-ride="carousel">
+		                        <div class="carousel-inner mt-4">
+		                            <div class="carousel-item text-center active">
+		                                <div class="img-box p-1 border rounded-circle m-auto">
+		                                    <img class="d-block w-100 rounded-circle" src="{{ asset ('images/quotations-button.png')}}" alt="">
+		                                </div>
+		                                <h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Paul Mitchel</strong></h5>
+		                                <h6 class="text-dark m-0">Web Developer</h6>
+		                                <p class="m-0 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
+		                            </div>
+		                            <div class="carousel-item text-center">
+		                                <div class="img-box p-1 border rounded-circle m-auto">
+		                                    <img class="d-block w-100 rounded-circle" src="{{asset ('images/quotations-button.png ')}}" alt="">
+		                                </div>
+		                                <h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Steve Fonsi</strong></h5>
+		                                <h6 class="text-dark m-0">Web Designer</h6>
+		                                <p class="m-0 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
+		                            </div>
+		                            <div class="carousel-item text-center">
+		                                <div class="img-box p-1 border rounded-circle m-auto">
+		                                    <img class="d-block w-100 rounded-circle" src="{{asset('images/quotations-button.png')}}" alt="">
+		                                </div>
+		                                <h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Daniel vebar</strong></h5>
+		                                <h6 class="text-dark m-0">Seo Analyst</h6>
+		                                <p class="m-0 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
+		                            </div>
+		                        </div>
+		                        <a class="carousel-control-prev" href="#reviews" role="button" data-slide="prev">
+		                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+		                            <span class="sr-only">Previous</span>
+		                        </a>
+		                        <a class="carousel-control-next" href="#reviews" role="button" data-slide="next">
+		                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+		                            <span class="sr-only">Next</span>
+		                        </a>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    End Customer Reviews -->
+
+{% endblock %}
+
+{% block slider %}
+	<section id="slider">
+		<div class="slides slick-initialized slick-slider">
+			<div class="slick-list draggable">
+				<div class="slick-track" style="opacity: 1; width: 1920px;">
+					<div class="slide slick-slide slick-current slick-active" style="background-image: url({{ asset ('images/slider-01.jpg') }}); width: 1920px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;" data-slick-index="0" aria-hidden="false" tabindex="0"></div>
+				</div>
+			</div>
+		</div>
+		<div class="titles slick-initialized slick-slider">
+			<div class="slick-list draggable">
+				<div class="slick-track" style="opacity: 1; width: 470px;">
+					<div class="title slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style="width: 470px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;" tabindex="0">Construisons le futur avec InsraPhoto.</div>
+				</div>
+			</div>
+		</div>
+		<div class="descriptions slick-initialized slick-slider">
+			<div class="slick-list draggable">
+				<div class="slick-track" style="opacity: 1; width: 400px;">
+					<div class="description slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style="width: 400px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;" tabindex="0">Notre espace pour partager entre nous des photos.</div>
+				</div>
+			</div>
+		</div>
+		<div class="arrows">
+			<button class="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
+			<button class="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
+		</div>
+	</section>
+{% endblock %}

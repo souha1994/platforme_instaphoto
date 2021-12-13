@@ -1,0 +1,67 @@
+{%  extends 'base2.html.twig' %}
+{% block work %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Messages reçus et e-mails envoyés</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <tr><th>
+                                        Username
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        recieved message
+                                    </th>
+                                    <th>
+                                        date of recieved message
+                                    </th>
+                                    <th>
+                                        reply
+                                    </th>
+                                    <th>
+                                        date of reply
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for e in e %}
+                                    <tr>
+                                        <td>
+                                            {{ e.contacted.creator.username}}
+                                        </td>
+                                        <td>
+                                            {{ e.contacted.creator.email}}
+                                        </td>
+                                        <td>
+                                            subject: {{ e.contacted.subject}}<br> body: {{ e.contacted.body }}
+                                        </td>
+                                        <td>
+                                            {{ e.contacted.contactUsdate|date}}
+                                        </td>
+                                        <td>
+                                            subject: {{ e.subject}}<br> body: {{ e.object }}
+                                        </td>
+                                        <td>
+                                            {{ e.maildate|date}}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

@@ -1,0 +1,11 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block title %}New Commentaire{% endblock %}
+
+{% block work %}
+    <h1>Create new Commentaire</h1>
+
+    {{ include('commentaire/_form.html.twig') }}
+
+    <a href="{{ path('commentaire_index') }}">back to list</a>
+{% endblock %}

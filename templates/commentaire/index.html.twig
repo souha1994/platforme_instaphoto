@@ -1,0 +1,44 @@
+{% extends 'ROLE_ADMIN' in app.user.roles ? 'base2.html.twig' : 'base_users.html.twig' %}
+
+{% block title %}Commentaire index{% endblock %}
+
+{% block work %}
+    <h1>Commentaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contenu</th>
+                <th>User</th>
+                <th>Image Title</th>
+                <th>Publier_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commentaire in commentaires %}
+            <tr>
+                <td>{{ commentaire.id }}</td>
+                <td>{{ commentaire.contenu }}</td>
+                <td> 
+                    <a href="{{ path('user_show', {'id': commentaire.user.id}) }}"> {{ commentaire.user.email }} </a> 
+                </td>
+                <td> 
+                    <a href="{{ path('image_show', {'id': commentaire.image.id}) }}"> {{ commentaire.image.title }} </a> 
+                </td>
+                <td>{{ commentaire.publierAt ? commentaire.publierAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('commentaire_show', {'id': commentaire.id}) }}">show</a>
+                    <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
